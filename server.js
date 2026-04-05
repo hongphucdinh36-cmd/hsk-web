@@ -1,20 +1,26 @@
 const express = require("express");
+const gTTS = require("google-tts-api");
+const path = require("path");
 const app = express();
 
-const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
+// Phục vụ static trực tiếp từ folder hiện tại
+app.use(express.static(__dirname));
 
-app.get("/tts", async (req, res) => {
+// Route TTS
+app.get("/tts", (req, res) => {
     const text = req.query.text;
+    if (!text) return res.send("Missing text");
 
-    const url = `https://translate.google.com/translate_tts?ie=UTF-8&tl=zh-CN&client=tw-ob&q=${encodeURIComponent(text)}`;
+    const url = gTTS.getAudioUrl(text, {
+        lang: "zh",
+        slow: false,
+    });
 
-    const response = await fetch(url);
-    const buffer = await response.arrayBuffer();
-
-    res.set("Content-Type", "audio/mpeg");
-    res.send(Buffer.from(buffer));
+    res.redirect(url);
 });
 
-app.listen(3000, () => {
-    console.log("Server chạy tại http://localhost:3000");
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, "0.0.0.0", () => {
+    console.log("Server chạy tại port " + PORT);
 });

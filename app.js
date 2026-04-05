@@ -573,10 +573,10 @@ document.querySelectorAll(".row").forEach(row => {
 
 // ===== SPEAK =====
 function speak(text) {
-    const audio = new Audio();
-    audio.src = "http://localhost:3000/tts?text=" + encodeURIComponent(text);
+    const audio = new Audio(`/tts?text=${encodeURIComponent(text)}`);
     audio.play();
 }
+window.speak = speak;
 
 // 🔥 QUAN TRỌNG
 window.speak = speak;
