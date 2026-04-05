@@ -1,23 +1,17 @@
-import express from "express";
-import googleTTS from "google-tts-api";
-import fetch from "node-fetch";
+const express = require("express");
+const gTTS = require("google-tts-api");
+const path = require("path");
 
 const app = express();
+app.use(express.static(__dirname));
 
-app.get("/tts", async (req, res) => {
-  const text = req.query.text || "你好";
+app.get("/tts", (req, res) => {
+    const text = req.query.text;
+    if (!text) return res.send("Missing text");
 
-  const url = googleTTS.getAudioUrl(text, {
-    lang: "zh",
-    slow: false,
-  });
-
-  const response = await fetch(url);
-
-  res.setHeader("Content-Type", "audio/mpeg");
-  response.body.pipe(res);
+    const url = gTTS.getAudioUrl(text, { lang: "zh", slow: false });
+    res.redirect(url);
 });
 
-app.listen(10000, () => {
-  console.log("Server chạy tại port 10000");
-});
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log("Server chạy tại port " + PORT));
