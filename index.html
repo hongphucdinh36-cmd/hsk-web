@@ -1,0 +1,201 @@
+    <!DOCTYPE html>
+    <html lang="vi">
+    <head>
+        <meta charset="UTF-8">
+        <title>Học HSK</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+
+    <header class="header">
+        <h1>汉字学习</h1>
+    </header>
+
+    <main class="container">
+
+        <!-- MÀN CHỌN LEVEL -->
+        <div id="homeScreen">
+            <div class="home-header">
+                <div class="home-text">
+                    <h2>选择等级</h2>
+                    <p class="subtitle">Chọn cấp độ HSK để bắt đầu học từ vựng</p>
+                </div>
+
+                <div class="home-dragon">
+                    <div class="dragon-speech">
+                        学习中文，加油加油!!!
+                    </div>
+                    <img src="anh-rong-30.png" />
+                </div>
+            </div>
+
+            <div class="grid-wrapper">
+                <div class="grid" id="levelContainer"></div>
+
+                <div class="side-image">
+                    <img src="cartoon.png" />
+                </div>
+            </div>
+        </div>
+
+        <!-- MÀN HỌC -->
+        <div id="learnScreen" style="display:none;">
+
+            <div class="top-bar">
+                <div class="left">
+                    <button onclick="goBack()">←</button>
+                    <span id="titleHSK">HSK 1</span>
+                </div>
+
+                <div class="actions">
+                    <button class="action-btn" id="btnAll">Tất cả</button>
+                    <button class="action-btn" id="btnHanzi">KT chữ Hán</button>
+                    <button class="action-btn" id="btnMeaning">KT nghĩa</button>
+                    <button class="action-btn" id="btnShuffle">Xáo trộn</button>
+                    <button class="action-btn primary" id="btnTest">Kiểm tra</button>
+                </div>
+            </div>
+
+            <input type="text" placeholder="🔍 Tìm từ..." id="searchInput">
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Chữ Hán</th>
+                        <th>Phiên âm</th>
+                        <th>Nghĩa</th>
+                    </tr>
+                </thead>
+                <tbody id="vocabTable"></tbody>
+            </table>
+
+        </div>
+
+        <!-- MÀN KIỂM TRA -->
+        <div id="testScreen" style="display:none;">
+
+            <h2>📝 Bài kiểm tra</h2>
+            <p>Chọn cài đặt và bắt đầu kiểm tra từ vựng của bạn</p>
+
+            <!-- LOẠI TỪ -->
+            <h3>LOẠI TỪ</h3>
+            <div class="row">
+                <button class="test-btn active">Tất cả </button>
+                <button class="test-btn">Đã nhớ ⭐ (0)</button>
+            </div>
+
+            <!-- LOẠI KIỂM TRA -->
+            <h3>LOẠI KIỂM TRA</h3>
+            <div class="row">
+                <button class="test-btn active" id="testMeaning">KT nghĩa</button>
+                <button class="test-btn" id="testHanzi">KT chữ Hán</button>
+                <button class="test-btn" id="testBoth">Cả 2</button>
+            </div>
+
+            <!-- SỐ TỪ -->
+            <h3>SỐ TỪ</h3>
+            <div class="row">
+                <button class="test-btn active">10</button>
+                <button class="test-btn">50</button>
+                <button class="test-btn">Tất cả </button>
+                <input type="number" id="numWords" placeholder="Tự nhập">
+            </div>
+
+            <!-- BỎ QUA -->
+            <div class="toggle-box">
+                <div>
+                    <div>Bỏ qua từ đã nhớ ⭐</div>
+                    <small>Chỉ kiểm tra từ chưa đánh dấu ⭐</small>
+                </div>
+                <input type="checkbox" id="skipKnown">
+            </div>
+
+            <!-- TIẾN ĐỘ -->
+            <div class="progress-box">
+                <div class="progress-top">
+                    <span>Tiến độ</span>
+                    <span id="progressText"></span>
+                </div>
+
+                <!-- 🔥 thêm cái này -->
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+
+                <small id="progressSub"></small>
+            </div>
+
+            <!-- RESET -->
+            <button class="reset-btn" onclick="resetProgress()">
+                ↻ Đặt lại tiến độ (xóa hết ⭐)
+            </button>
+
+            <!-- ACTION -->
+            <div class="test-actions">
+                <button onclick="backToLearn()">← Quay lại</button>
+                <button class="start-btn" onclick="startTest()">Bắt đầu →</button>
+            </div>
+
+        </div>
+
+        <!-- MÀN LÀM TEST -->
+        <div id="quizScreen" style="display:none;">
+
+            <div class="top-bar">
+                <div>汉字学习</div>
+                <div id="quizProgress">Câu 1 / 10</div>
+                <button onclick="exitQuiz()">✕ Thoát</button>
+            </div>
+
+            <div class="quiz-card">
+                <p class="quiz-title">CHỌN NGHĨA TIẾNG VIỆT ĐÚNG</p>
+
+                <h1 id="quizHanzi">学习</h1>
+
+                <span class="speaker" id="quizSpeaker">🔊</span>
+
+                <p id="quizPinyin">xuéxí</p>
+
+                <div id="answers" class="answers"></div>
+            </div>
+
+        </div>
+
+        <!-- ✅ MÀN KẾT QUẢ -->
+        <div id="resultScreen" style="display:none;">
+
+            <div class="quiz-card">
+
+                <h1 id="resultScore">0/0</h1>
+                <p>🎉 Xuất sắc! Bạn thật giỏi!</p>
+
+                <div style="display:flex; justify-content:center; gap:40px; margin:20px 0;">
+                    <div>
+                        <h2 id="correctCount" style="color:green;">0</h2>
+                        <small>ĐÚNG</small>
+                    </div>
+                    <div>
+                        <h2 id="wrongCount" style="color:red;">0</h2>
+                        <small>SAI</small>
+                    </div>
+                </div>
+
+                <button class="btn" onclick="saveKnown()">
+                    ⭐ Lưu từ đã nhớ
+                </button>
+
+                <div class="test-actions">
+                    <button onclick="startTest()">🔄 Làm tiếp</button>
+                    <button onclick="backToLearn()">← Về trang học</button>
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+    <script type="module" src="app.js"></script>
+
+    </body>
+    </html>
