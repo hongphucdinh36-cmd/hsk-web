@@ -160,7 +160,7 @@ function renderChunk() {
                         class="input-hanzi" 
                         placeholder="Nhập nghĩa..." 
                         data-answer="${word.meaning}"
-                        onkeypress="handleCheck(event, this)"
+                        onkeydown="handleCheck(event, this)"
                     >
                 </td>
             `;
@@ -176,7 +176,7 @@ function renderChunk() {
                         class="input-hanzi" 
                         placeholder="Nhập chữ Hán..." 
                         data-answer="${word.hanzi}"
-                        onkeypress="handleCheck(event, this)"
+                        onkeydown="handleCheck(event, this)"
                         autocomplete="off"
                     >
                 </td>
