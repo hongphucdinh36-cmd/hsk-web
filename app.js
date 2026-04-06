@@ -635,11 +635,7 @@ function handleCheck(e, input) {
         let isCorrect = false;
 
         if (currentMode === "meaning") {
-            isCorrect = correctList.some(ans =>
-                ans === user ||
-                ans.includes(user) ||
-                user.includes(ans)
-            );
+           isCorrect = correctList.some(ans => ans === user);
         } 
         else if (currentMode === "hanzi") {
             isCorrect = correctList.includes(user);
