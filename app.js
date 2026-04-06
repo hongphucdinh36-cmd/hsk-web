@@ -656,6 +656,7 @@ function handleCheck(e, input) {
         }
     }
 }
+window.handleCheck = handleCheck;
 
 function updateProgress() {
     const words = DATA[currentLevel] || [];
